@@ -1,0 +1,32 @@
+version: "2"
+
+services:
+  
+  base:
+    image: golang
+    volumes:
+      - .:/go/src/go-with-compose
+    working_dir: /go/src/go-with-compose
+
+  install:
+    image: lushdigital/docker-golang-dep
+    volumes:
+      - .:/go/src/go-with-compose
+    working_dir: /go/src/go-with-compose
+    command: init
+  
+  dev:
+    extends: base
+    command: go run main.go
+
+  build:
+    extends: base
+    command: go build main.go
+
+  run:
+    extends: base
+    command: bash -c "./main"
+
+  bash:
+    extends: base
+    command: bash
